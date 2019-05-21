@@ -1,0 +1,68 @@
+// z7_8.cpp : Ten plik zawiera funkcje „main”. W nim rozpoczyna sie i konczy wykonywanie programu.
+//
+
+
+#include "pch.h"
+#include <iostream>
+#include<stdio.h>
+
+double funkcja1(int * tab, int n)
+{
+	double maxi = tab[0];
+	for (int i = 1; i < n; i++)
+	{
+		if (tab[i] > maxi)
+			maxi = tab[i];
+	}
+	return maxi;
+}
+double funkcja2(int * tab, int n)
+{
+	double mini = tab[0];
+	for (int i = 1; i < n; i++)
+	{
+		if (tab[i] < mini)
+			mini = tab[i];
+	}
+	return mini;
+}
+double funkcja3(int * tab, int n)
+{
+	double srednia = 0;
+	for (int i = 0; i < n; i++)
+	{
+		srednia += tab[i];
+	}
+
+	return srednia / n;
+}
+
+
+int main()
+{
+	FILE *plik;
+		fopen_s(&plik,"pomiary.txt", "r");
+	int n=10;
+	int * tab = new int[n];//
+	int numer_s;
+	fscanf_s(plik, "%i", &numer_s);//pierwszy numer serii
+	n = 1;//dziala ale pamietaj ze mozesz niz znac rozmiaru pliku
+	while (n<11) {
+
+		fscanf_s(plik,"%i", &tab[n-1]);
+		n++;
+	}
+	double(*TF[3])(int *, int) = { funkcja3, funkcja1, funkcja2 };
+
+	int kt_f;
+	fscanf_s(plik,"%i", &kt_f);//ostatnia linia w pliku mowi ktora funkcja ma byc wykonana
+	double x = TF[kt_f](tab, n-1);//nalezaloby zapewnic ochrone przed bledami
+	printf("%lf", x);
+	//f 0- maks f 1-min f 2- srednia//dzialalao zanim dodalem numer serii
+	fclose(plik);
+	fopen_s(&plik, "wyniki.txt", "w");
+	fprintf_s(plik,"%i \n",numer_s);
+	fprintf_s(plik, "%lf \n", x);
+	fprintf_s(plik, "%i \n ", kt_f);
+	fclose(plik);
+}

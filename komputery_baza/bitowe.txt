@@ -1,0 +1,56 @@
+
+#include "pch.h"
+#include <iostream>
+//C:\Users\student\Documents\file\
+
+struct nukl {
+	char kod[2];
+	char litera[1];
+};
+
+unsigned char t2b(int Tk[],char Tl[])//tk to tab kluczy tl ma litery ktore sa  nam dane
+{
+	unsigned char byte = 0;//char ma 8 bitow 
+	for (int i = 0;i < 4;i++)
+	{
+		byte <<= 2;
+		byte |= Tk[Tl[i] - 'A'];
+	}
+	return byte;
+}
+
+
+
+void koduj() {
+	//char nazwa[16];
+	//printf("podaj nazwe pliku z danymi do zakodowania");
+	//scanf_s("%s",&nazwa,15);//strlen()
+	FILE * plikin , *plikout;
+	fopen_s(&plikin,"nukleotydy.txt", "r");
+	fopen_s(&plikout,"zakodowane_nukleotydy","wb");
+	char Tl[5] = "ATGC";
+	int Tk['T' - 'A' + 1] = {0};
+//w tk sa liczby binarne w postaci (10)//A
+	Tk['T' - 'A'] = 1;//T
+	Tk['G' - 'A'] = 2;
+	Tk['C' - 'A'] = 3;
+	int c;
+	unsigned char result;
+	while ((c = fgetc(plikin)) != EOF) {
+		fscanf_s(plikin,"%s",Tl);
+		result=t2b(Tk,Tl);
+		fprintf_s(plikout, "%c", result);
+
+	}
+
+}
+
+int main()
+{
+	int akcja=1;
+    printf( "koduj 1 dekoduj 2\n"); 
+	scanf_s("%i", &akcja);
+	//nukl kody[4] = { {{'00'},{'A'}},{{'01'},{'C'}},{{'10'},{'G'}},{{'11'},{'T'}} };
+	koduj();
+	
+}

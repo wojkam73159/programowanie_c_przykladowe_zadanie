@@ -1,0 +1,6 @@
+while (fscanf(f, "   %s   ", &etc) != EOF) {
+
+}
+
+
+https://stackoverflow.com/questions/7921141/c-read-until-end-of-file

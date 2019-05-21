@@ -1,0 +1,46 @@
+//
+
+#include "pch.h"
+#include <iostream>
+#include<stdio.h>
+#include<math.h>
+double sinus(double x, bool real)
+{
+	return sin(x);
+}
+double tg_moj(double x,bool real)
+{
+	if (sin(x) != 0)
+		return tan(x);
+	else { return 0; real = false; }
+}
+double sqrt_moj(double x, bool real)
+{
+	if (x > 0)
+		return sqrt(x);
+	else { return 0; real = false; }
+}
+double ln_moj(double x, bool real)
+{
+	if (x > 0)
+		return log(x);
+	else { return 0; real = false; }
+
+}
+
+int main()
+{
+    printf("ktora funkcje chcesz uzyc? do wyboru :0- sin(x) ; 1-tg(x); 2-sqrt(x); 3-ln(x); Qlub q koniec programu"); 
+	int akcja;
+	scanf_s("%i",&akcja);
+	printf("podaj argument x typu double");
+	double x;
+	scanf_s("%lf", &x);
+	bool pom = true;
+	double(*TF[4])(double, bool) = { sinus,tg_moj ,sqrt_moj,ln_moj };
+	x = TF[akcja](x,pom);
+	if(pom)
+		printf("%lf", x);
+	else
+		printf("zle podales wartosc");
+}
